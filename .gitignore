@@ -18,3 +18,7 @@ venv/
 Thumbs.db
 .vscode/
 .idea/
+
+# Demo video (uploaded to Canvas separately)
+akin_demo*.mp4
+report/video_raw/
