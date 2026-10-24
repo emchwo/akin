@@ -64,12 +64,12 @@
     body { font-size:10.5pt; }
     figure, .diagram, .kpis, tr { break-inside:avoid; }
     .num, h2, h3 { break-after:avoid-page; }
-    pre.cols { break-inside:auto; }
+    pre.excerpt { break-inside:auto; }
     figure img { max-height:3.1in; object-fit:contain; object-position:left top; }
     .grid2 figure img { max-height:2.5in; }
     figure.crop img { height:2.1in; max-height:2.1in; object-fit:cover; object-position:top; }
     table { font-size:9pt; } .trace td { font-size:7.8pt; line-height:1.35; padding:4px 6px; }
-    pre.cols { columns:2; column-gap:18px; font-size:6.9pt; line-height:1.3; }
+    pre.excerpt { font-size:9pt; line-height:1.45; }
     .lede { font-size:14pt; }
     .todo { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     a { color:var(--ink); }
@@ -359,8 +359,10 @@
 
   <h3>Evidence: the defenses under attack</h3>
   <p><code>tests/safety_tests.py</code> runs each attack against the real app. The Checker test uses 4 real model
-  calls; the rest swap in a fake model so failures can be forced on purpose. Result: <b>{{safety_held_words}}</b>.</p>
-  <pre class="cols">{{safety_output}}</pre>
+  calls; the rest swap in a fake model so failures can be forced on purpose. Result: <b>{{safety_held_words}}</b>.
+  Below is each attack category with one sample result; the
+  <a href="https://github.com/emchwo/akin/blob/main/report/safety_test_output.txt">full test output</a> is in the repo.</p>
+  <pre class="excerpt">{{safety_output}}</pre>
   <div class="grid2">
     <figure><img src="img/12_name_rejected.png" alt="Injection name rejected"><figcaption>"Ignore all instructions" as a name is rejected on the start screen.</figcaption></figure>
     <div>

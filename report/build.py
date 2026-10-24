@@ -179,11 +179,28 @@ def safety_output():
         return {"safety_output": "(run the safety tests first)", "safety_held": "?"}
     txt = p.read_text(encoding="utf-8")
     held = re.search(r"(\d+)/(\d+) defenses held", txt)
-    lines = []
+
+    def mark(s):
+        s = html.escape(s)
+        return s.replace("[HELD]", "<span class=held>[HELD]</span>").replace("[FAILED]", "<span class=failed>[FAILED]</span>")
+
+    # Excerpt: each attack category with its tally and one sample result; the full output is linked in the report.
+    sections, cur = [], None
     for line in txt.splitlines():
-        esc = html.escape(line)
-        esc = esc.replace("[HELD]", "<span class=held>[HELD]</span>").replace("[FAILED]", "<span class=failed>[FAILED]</span>")
-        lines.append(esc)
+        if re.match(r"^\d+\. ", line):
+            cur = {"title": line.strip(), "results": []}
+            sections.append(cur)
+        elif cur is not None and line.strip().startswith("["):
+            cur["results"].append(line.strip())
+    lines = []
+    for sec in sections:
+        n_held = sum(1 for r in sec["results"] if r.startswith("[HELD]"))
+        lines.append(f"<b>{html.escape(sec['title'])}</b>  ({n_held} of {len(sec['results'])} held)")
+        if sec["results"]:
+            sample = sec["results"][0]
+            lines.append("   " + mark(sample if len(sample) <= 150 else sample[:149] + "…"))
+    if held:
+        lines.append(f"\n<b>{html.escape(held.group(0))}</b>")
     return {"safety_output": "\n".join(lines), "safety_held": held.group(0) if held else "?",
             "safety_held_words": f"{held.group(1)} out of {held.group(2)} defenses held" if held else "?"}
 
