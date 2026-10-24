@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ app_name }} · Results</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%232E2A25' stroke-width='5' stroke-linecap='round'%3E%3Ccircle cx='28' cy='38' r='15'/%3E%3Cpath d='M43 23 V53'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .stage { max-width: 960px; }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); margin-top: 40px; }
+    .col { padding: 30px 0; }
+    .col + .col { border-left: 1px solid var(--line); padding-left: 36px; }
+    .col:first-child { padding-right: 36px; }
+    @media (max-width: 680px) {
+      .cols { grid-template-columns: 1fr; }
+      .col + .col { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; }
+      .col:first-child { padding-right: 0; }
+    }
+    .stat { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); gap: 16px; }
+    .stat .k { color: var(--muted); font-size: 15px; }
+    .stat .v { font-family: var(--serif); font-weight: 300; font-size: 30px; line-height: 1; white-space: nowrap; }
+    .stat.minor .v { font-size: 18px; font-family: var(--sans); }
+    .bar { display: flex; height: 0; border-top: 1px solid var(--line); margin: 14px 0 6px; }
+    .bar span { height: 0; border-top: 1px solid; margin-top: -1px; }
+    .legend { display: flex; gap: 16px; font-size: 12px; color: var(--muted); }
+    .legend i { display: inline-block; width: 14px; border-top: 1px solid; vertical-align: middle; margin-right: 6px; }
+    .none { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="topbar"><a class="wordmark" href="/" aria-label="{{ app_name }} home">{% include "_logo.html" %}</a></header>
+  <main class="stage">
+    <p class="eyebrow">User testing</p>
+    <h1>Results</h1>
+    <p class="lede">Feedback from {{ r.total_sessions }} session{{ '' if r.total_sessions == 1 else 's' }}, split by setting (first date or friends). Names are never stored. Test-script entries are excluded.</p>
+
+    <div class="cols">
+      {% for m in r.groups %}
+      <section class="col">
+        <p class="eyebrow">{{ m.label }}</p>
+        <h3>{{ m.sessions }} session{{ '' if m.sessions == 1 else 's' }} · {{ m.player_answers }} player ratings</h3>
+
+        <div class="stat"><span class="k">“Yes, feels right”</span><span class="v">{{ '%d%%' % m.feels.yes if m.feels.yes is not none else '—' }}</span></div>
+        {% if m.player_answers %}
+        <div class="bar" aria-hidden="true">
+          <span style="width: {{ m.feels.yes }}%; border-color: var(--sage)"></span>
+          <span style="width: {{ m.feels.kind_of }}%; border-color: var(--slate)"></span>
+          <span style="width: {{ m.feels.no }}%; border-color: var(--clay)"></span>
+        </div>
+        <div class="legend">
+          <span><i style="border-color: var(--sage)"></i>Yes {{ m.feels.yes }}%</span>
+          <span><i style="border-color: var(--slate)"></i>Kind of {{ m.feels.kind_of }}%</span>
+          <span><i style="border-color: var(--clay)"></i>No {{ m.feels.no }}%</span>
+        </div>
+        {% endif %}
+        <div class="stat"><span class="k">Learned something new about the other person</span><span class="v">{{ '%d%%' % m.learned.yes if m.learned.yes is not none else '—' }}</span></div>
+        {% if m.learned_n %}
+        <div class="bar" aria-hidden="true">
+          <span style="width: {{ m.learned.yes }}%; border-color: var(--sage)"></span>
+          <span style="width: {{ m.learned.a_little }}%; border-color: var(--slate)"></span>
+          <span style="width: {{ m.learned.no }}%; border-color: var(--clay)"></span>
+        </div>
+        <div class="legend">
+          <span><i style="border-color: var(--sage)"></i>Yes {{ m.learned.yes }}%</span>
+          <span><i style="border-color: var(--slate)"></i>A little {{ m.learned.a_little }}%</span>
+          <span><i style="border-color: var(--clay)"></i>No {{ m.learned.no }}%</span>
+        </div>
+        {% endif %}
+        <div class="stat"><span class="k">Would play again</span><span class="v">{{ '%d%%' % m.again_pct if m.again_pct is not none else '—' }}</span></div>
+
+        <div class="stat minor"><span class="k">Games logged</span><span class="v">{{ m.games_logged }}</span></div>
+        <div class="stat minor"><span class="k">Average rounds (6–8)</span><span class="v">{{ m.avg_rounds if m.avg_rounds is not none else '—' }}</span></div>
+        <div class="stat minor"><span class="k">Ended at round {{ r.min_rounds }}</span><span class="v">{{ '%d%%' % m.ended_at_min_pct if m.ended_at_min_pct is not none else '—' }}</span></div>
+        <div class="stat minor"><span class="k">Average minutes per game</span><span class="v">{{ m.avg_minutes if m.avg_minutes is not none else '—' }}</span></div>
+        <div class="stat minor"><span class="k">Average LLM calls / cost per game</span><span class="v">{{ m.avg_calls if m.avg_calls is not none else '—' }} · {{ '$%.4f' % m.avg_cost if m.avg_cost is not none else '—' }}</span></div>
+        <div class="stat minor"><span class="k">Checker rejections (all games)</span><span class="v">{{ m.checker_rejections }}</span></div>
+      </section>
+      {% endfor %}
+    </div>
+    <p class="lede" style="font-size:14px">Source: logs/feedback.jsonl and logs/games.jsonl.</p>
+    <div class="actions"><a class="btn" href="/">Back to home</a></div>
+  </main>
+</body>
+</html>

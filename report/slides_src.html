@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akin · slides</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Three type sizes only: S (labels, captions), M (body), L (titles, big numbers). */
+  :root { --bg:#F5F1EA; --surface:#FBF9F5; --line:#CFC6B8; --ink:#2E2A25; --muted:#7A7166; --sage:#6B7F5E; --clay:#B5543C; --slate:#4F6D85;
+          --serif:"Fraunces",Georgia,serif; --sans:"Inter",-apple-system,"Segoe UI",Arial,sans-serif;
+          --S:20px; --M:27px; --L:52px; }
+  .reveal-viewport { background:var(--bg); }
+  .reveal { font-family:var(--sans); font-weight:300; font-size:var(--M); color:var(--ink); }
+  .reveal .slides { text-align:left; }
+  .reveal b, .reveal strong { font-weight:500; }
+  .reveal i, .reveal em { font-style:italic; }
+  .reveal p { margin:0; line-height:1.45; }
+  .reveal ul { margin:0 0 0 1em; }
+  .reveal li { line-height:1.4; margin:0 0 18px; }
+  .reveal li:last-child { margin-bottom:0; }
+
+  /* Every slide is a full-height column: header on top, the body grows to fill the rest. */
+  .slide { height:860px; box-sizing:border-box; padding:44px 70px 40px; display:flex; flex-direction:column; gap:24px; }
+  .grow { flex:1; display:flex; flex-direction:column; justify-content:center; gap:28px; min-height:0; }
+  .eyebrow { font-size:var(--S); letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+  .reveal h2 { font-family:var(--serif); font-weight:300; font-size:var(--L); line-height:1.12; letter-spacing:-0.01em; margin:6px 0 0; text-transform:none; color:var(--ink); }
+  .serif { font-family:var(--serif); }
+  .muted { color:var(--muted); }
+  .S { font-size:var(--S); }
+  .cap { font-size:var(--S); color:var(--muted); margin-top:10px !important; line-height:1.35; }
+  .rule { border-top:1px solid var(--line); }
+
+  .kpis { display:grid; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .kpis > div { padding:26px 22px; }
+  .kpis > div + div { border-left:1px solid var(--line); }
+  .kpis .v { font-family:var(--serif); font-size:var(--L); line-height:1.05; }
+  .kpis .k { font-size:var(--S); color:var(--muted); margin-top:10px; line-height:1.35; }
+
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; }
+  .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .reveal img { margin:0; border:1px solid var(--line); border-radius:6px; max-width:100%; display:block; }
+  .fit { width:100%; object-fit:cover; object-position:top; }
+
+  .reveal table { border-collapse:collapse; width:100%; font-size:var(--S); }
+  .reveal table th, .reveal table td { border:0; border-bottom:1px solid var(--line); padding:18px 16px; text-align:left; font-weight:300; vertical-align:top; line-height:1.35; }
+  .reveal table thead th { letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:400; }
+  .reveal table tbody th { font-weight:500; }
+  .reveal table td.akin, .reveal table th.akin { background:#FFFFFF; font-weight:600; color:var(--ink); }
+  .reveal table.side th { width:26%; color:var(--muted); font-weight:400; letter-spacing:.12em; text-transform:uppercase; }
+  .reveal table.side td { font-size:var(--M); }
+
+  .diagram { background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:10px 14px; flex:1; min-height:0; display:flex; }
+  .diagram svg { width:100%; height:100%; }
+  .reveal .progress { color:var(--ink); height:2px; }
+  .reveal .controls { color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<!-- 1. Title: S + M (logo is a drawing) -->
+<section><div class="slide">
+  <p class="eyebrow">MGT 409 · Final project · Emily Chow</p>
+  <div class="grow" style="gap:44px">
+    <svg viewBox="13 20 128 52" style="height:230px;width:auto;align-self:flex-start;overflow:visible" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="akin">
+      <g stroke="#2E2A25" stroke-width="2.4"><circle cx="30" cy="55" r="15"/><path d="M45 40 V70 M62 22 V70 M82 40 L62 58 M69 51 L84 70 M98 40 V70 M114 70 V40 M114 52 C114 44 119 40 126 40 C133 40 138 44 138 52 V70"/></g>
+      <circle cx="98" cy="29" r="2.4" fill="#2E2A25"/>
+    </svg>
+    <div class="rule"></div>
+    <p class="serif muted" style="max-width:24em">A conversation game for a first date or two friends. AI writes the scenarios, you answer
+    in private on one device, and every answer becomes a question about each other.</p>
+  </div>
+  <p class="eyebrow">Yale School of Management · October 2026</p>
+</div></section>
+
+<!-- 2. Problem: S + M + L -->
+<section><div class="slide">
+  <div><p class="eyebrow">The problem</p><h2>Getting past small talk, on a first date or with a new friend</h2></div>
+  <div class="grow">
+    <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+      <div><div class="v">53%</div><div class="k">of U.S. adults under 30 have used a dating site or app (Pew Research Center)</div></div>
+      <div><div class="v">78%</div><div class="k">of dating-app users feel burned out by the apps (Forbes Health)</div></div>
+      <div><div class="v">43%</div><div class="k">of young singles don't date at all because of anxiety (DatingAdvice)</div></div>
+    </div>
+    <div class="grid2" style="align-items:start">
+      <div>
+        <p class="eyebrow" style="margin-bottom:12px">How people get to know each other today</p>
+        <p>Small talk, a card deck, or a chatbot's list of questions. They're safe and generic, and none of them
+        reaches how the other person actually sees love.</p>
+      </div>
+      <div>
+        <p class="eyebrow" style="margin-bottom:12px">Why I built it</p>
+        <p class="serif">When I first came to Yale SOM, I made a lot of new friends through proximity, but I wanted to
+        connect with them on a deeper level too. There's a similar feeling that arises when dating and getting to know
+        someone for the first time. It's fun and illuminating to talk about how we see love and relationships, so I
+        wanted to build something to facilitate that.</p>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 3. What's new: S + M + L -->
+<section><div class="slide">
+  <div><p class="eyebrow">What's new</p><h2>Not a question deck: a game that listens</h2></div>
+  <p>Akin is powered by AI agents that analyze the players' responses and create an archetype at the end for
+  people to identify with. Traditional conversation decks like <i>We're Not Really Strangers</i>, or conversation
+  starters like the classic <i>36 Questions to Fall in Love</i>, can't do the same.</p>
+  <div class="grow">
+    <table>
+      <thead><tr><th></th><th>Card decks ({THE AND}, WNRS)</th><th>36 Questions</th><th>Chatbot list</th><th class="akin">Akin</th></tr></thead>
+      <tbody>
+        <tr><th>Adapts to your answers</th><td>No</td><td>No</td><td>No</td><td class="akin">Yes: picks the least-clear topic next</td></tr>
+        <tr><th>Answer privately, then reveal</th><td>No</td><td>No</td><td>No</td><td class="akin">Yes, on one device</td></tr>
+        <tr><th>Follow-up written for your two answers</th><td>No</td><td>No</td><td>No</td><td class="akin">Yes, about your own lives</td></tr>
+        <tr><th>An archetype at the end, with evidence</th><td>No</td><td>No</td><td>No</td><td class="akin">8 types, cited to your rounds</td></tr>
+        <tr><th>Cost</th><td>$20 a deck</td><td>Free</td><td>Free</td><td class="akin">About {{on_cost}} a game</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></section>
+
+<!-- 4. Agents: S + M + L (diagram text drawn at the S and M sizes) -->
+<section><div class="slide">
+  <div><p class="eyebrow">How the agents work</p><h2>A planner in code, four writers, and code that checks them</h2></div>
+  <div class="diagram">
+  <svg viewBox="0 0 780 420" preserveAspectRatio="xMidYMid meet" font-family="Inter, Arial, sans-serif" font-size="10.7" fill="none" stroke-linecap="round">
+    <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2E2A25"/></marker></defs>
+    <g stroke="#2E2A25" stroke-width="1">
+      <rect x="230" y="10" width="320" height="66" rx="6" fill="#FBF9F5"/>
+      <rect x="10" y="124" width="220" height="66" rx="6" fill="#FBF9F5"/>
+      <rect x="280" y="124" width="220" height="66" rx="6" fill="#FBF9F5" stroke-dasharray="4 3"/>
+      <rect x="550" y="124" width="220" height="66" rx="6" fill="#FBF9F5"/>
+      <rect x="230" y="232" width="320" height="66" rx="6" fill="#F5F1EA"/>
+      <rect x="10" y="340" width="240" height="66" rx="6" fill="#FBF9F5"/>
+      <rect x="290" y="340" width="220" height="66" rx="6" fill="#FBF9F5" stroke-dasharray="4 3"/>
+      <rect x="550" y="340" width="220" height="66" rx="6" fill="#FBF9F5"/>
+      <path d="M390 76 V100 H120 V122" marker-end="url(#ar)"/>
+      <path d="M230 157 H278" marker-end="url(#ar)"/>
+      <path d="M500 157 H548" marker-end="url(#ar)"/>
+      <path d="M660 190 V212 H120 V194" stroke="#B5543C" stroke-dasharray="3 3" marker-end="url(#ar)"/>
+      <path d="M660 190 V265 H552" marker-end="url(#ar)"/>
+      <path d="M230 265 H130 V338" marker-end="url(#ar)"/>
+      <path d="M550 282 H580 C620 282 620 43 552 43" marker-end="url(#ar)"/>
+      <path d="M250 373 H288" marker-end="url(#ar)"/>
+      <path d="M510 373 H548" marker-end="url(#ar)"/>
+    </g>
+    <g fill="#2E2A25">
+      <text x="390" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="14.5">Planner</text>
+      <text x="390" y="62" text-anchor="middle" fill="#7A7166">plain code · picks the next axis · 6–8 rounds</text>
+      <text x="120" y="154" text-anchor="middle" font-family="Georgia,serif" font-size="14.5">Scenario Writer</text>
+      <text x="120" y="176" text-anchor="middle" fill="#7A7166">gpt-6-luna · JSON</text>
+      <text x="390" y="154" text-anchor="middle" font-family="Georgia,serif" font-size="14.5">Code checks</text>
+      <text x="390" y="176" text-anchor="middle" fill="#7A7166">schema, length, repeats, PG</text>
+      <text x="660" y="154" text-anchor="middle" font-family="Georgia,serif" font-size="14.5">Checker</text>
+      <text x="660" y="176" text-anchor="middle" fill="#7A7166">gpt-6-luna · verdict</text>
+      <text x="132" y="207" fill="#B5543C">reject + reason (2 rewrites, then a fallback)</text>
+      <text x="390" y="262" text-anchor="middle" font-family="Georgia,serif" font-size="14.5">Two players, one device</text>
+      <text x="390" y="284" text-anchor="middle" fill="#7A7166">answer privately, then reveal</text>
+      <text x="628" y="100" fill="#7A7166">answers update scores</text>
+      <text x="130" y="370" text-anchor="middle" font-family="Georgia,serif" font-size="14.5">Prompt Writer</text>
+      <text x="130" y="392" text-anchor="middle" fill="#7A7166">gpt-6-luna · one question</text>
+      <text x="400" y="370" text-anchor="middle" font-family="Georgia,serif" font-size="14.5">Reveal Writer</text>
+      <text x="400" y="392" text-anchor="middle" fill="#7A7166">after round 6–8 · JSON</text>
+      <text x="660" y="370" text-anchor="middle" font-family="Georgia,serif" font-size="14.5">Evidence check</text>
+      <text x="660" y="392" text-anchor="middle" fill="#7A7166">cited rounds must exist</text>
+    </g>
+  </svg>
+  </div>
+  <p class="cap" style="margin-top:0 !important">Dashed boxes are plain code. Everything with a right answer (which topic next, what an answer means, the final type) is decided in code; the model only writes.</p>
+</div></section>
+
+<!-- 5. Demo: S + L -->
+<section><div class="slide">
+  <div><p class="eyebrow">Demo · one real game</p><h2>What does gameplay look like?</h2></div>
+  <div class="grow" style="gap:22px">
+    <div class="grid4">
+      <div><img src="img/03_scenario.png" alt="Scenario" class="fit" style="height:200px"><p class="cap">Read the scenario together</p></div>
+      <div><img src="img/04_answer.png" alt="Private answer" class="fit" style="height:200px"><p class="cap">Answer privately, with the screen turned away</p></div>
+      <div><img src="img/07_reveal.png" alt="Reveal" class="fit" style="height:200px"><p class="cap">Both players answer separately, and then the game creates a discussion question to answer together</p></div>
+      <div><img src="img/08_end_or_continue.png" alt="End or continue" class="fit" style="height:200px;object-position:bottom"><p class="cap">After round 6, end now or keep going</p></div>
+    </div>
+    <div class="grid2" style="gap:18px;align-items:start">
+      <div><img src="img/09_end_top.png" alt="End screen" class="fit" style="height:290px"><p class="cap">Each type's icon draws itself, then meters and a plain summary</p></div>
+      <div><img src="img/14_icons.png" alt="Eight icons" class="fit" style="height:290px;object-position:center 62%"><p class="cap">Eight types, one drawing style</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 6. Cost: S + M + L -->
+<section><div class="slide">
+  <div><p class="eyebrow">Cost to run · measured on {{on_n}} real games</p><h2>Less than half a cent a game</h2></div>
+  <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+    <div><div class="v">{{on_cost}}</div><div class="k">per game ({{on_calls}} model calls, {{on_rounds}} rounds)</div></div>
+    <div><div class="v">{{on_cached_pct}}</div><div class="k">of input tokens served from cache</div></div>
+    <div><div class="v">{{cache_saving_pct}}</div><div class="k">saved per game by prompt caching</div></div>
+    <div><div class="v">{{cost_10k}}</div><div class="k">a month for 10,000 users at {{games_per_month}} games each</div></div>
+  </div>
+  <div class="grow">
+    <div class="grid2">
+      <ul>
+        <li>One static ~1,900-token guide starts every prompt, so it caches</li>
+        <li>Code, not the model, for scoring, topic choice, and the final type</li>
+        <li>Low reasoning effort and an output cap on every call</li>
+        <li>6 rounds by default, 8 at most (down from 10)</li>
+      </ul>
+      <div><img src="img/11_stats.png" alt="Stats panel" class="fit" style="height:330px;object-position:right bottom"><p class="cap">The in-app Stats panel, live for every game</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 7. Safety: S + M + L -->
+<section><div class="slide">
+  <div><p class="eyebrow">Safety</p><h2>{{safety_held_words}}, tested under attack</h2></div>
+  <div class="grow">
+    <div class="grid2">
+      <ul>
+        <li><b>Prompt injection:</b> names are filtered, and never sent to the model at all</li>
+        <li><b>Unsafe content:</b> a code screen plus a Checker on every scenario</li>
+        <li><b>Invented facts:</b> evidence must cite real rounds, checked in code</li>
+        <li><b>Loops and overspending:</b> retry limits, an 8-round cap, 40 calls per game, token caps</li>
+        <li><b>Misclicks:</b> back buttons, change an answer, undo a round</li>
+      </ul>
+      <div><img src="img/12_name_rejected.png" alt="Injection rejected" class="fit" style="height:430px"><p class="cap">"Ignore all instructions" as a name is rejected. Every defense logs what it caught.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 8. Impact: S + M + L -->
+<section><div class="slide">
+  <div><p class="eyebrow">Impact</p><h2>What changes at the table</h2></div>
+  <div class="grow">
+    <div class="grid2" style="align-items:start">
+      <table class="side">
+        <tbody>
+          <tr><th>Real session</th><td>I played a full game with a friend in the Friends setting. It took about 20 minutes over 6 rounds, and the length of each conversation varied from round to round.</td></tr>
+          <tr><th>Feedback</th><td>His main piece of feedback was that the ending page was too cut-and-dry: <i>"the ending felt like it was just repeating our answers back to us."</i></td></tr>
+          <tr><th>What changed</th><td>The reveal now interprets what each person values and how their views shape the way they connect, citing the rounds behind it.</td></tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>Structured, personal questions raise closeness between strangers (Aron et al., 1997)</li>
+        <li>Akin adds what a deck can't: adaptive topics, private answers, and an archetype with evidence</li>
+        <li>About {{on_cost}} a game, compared with $20 for a printed deck</li>
+        <li>Quick wait times: {{wait_reveal}} s to reveal answers and {{wait_next}} s for the next scenario, which is written while you talk</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- 9. Next: S + M + L -->
+<section><div class="slide">
+  <div><p class="eyebrow">What's next</p><h2>From a local server to a link anyone can open</h2></div>
+  <div class="grow">
+    <ul>
+      <li><b>Host it online:</b> turn Akin into a link anyone can open, or a mobile app, so no one has to start a server before playing</li>
+      <li><b>Two-device mode:</b> let each player answer on their own phone, so answers stay truly private</li>
+      <li><b>Validate the types:</b> compare them with an established relationship-beliefs questionnaire across more players</li>
+      <li><b>Friends-specific results:</b> write types for "how you'd advise each other," not only how each person sees love</li>
+      <li><b>A post-date card:</b> share your two types and the prompts that started the best conversations</li>
+      <li><b>Test cost against quality:</b> A/B test the Checker and reasoning effort for quality per cent of cost</li>
+    </ul>
+  </div>
+  <p class="cap">Arrow keys to move · F for full screen · Report and code: <a href="https://github.com/emchwo/akin" style="color:inherit">github.com/emchwo/akin</a></p>
+</div></section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({ hash: true, controls: true, progress: true, center: false, transition: "fade",
+                      width: 1600, height: 900, margin: 0.04 });
+</script>
+</body>
+</html>

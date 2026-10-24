@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akin: Final Project Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#F5F1EA; --surface:#FBF9F5; --line:#CFC6B8; --ink:#2E2A25; --muted:#7A7166; --sage:#6B7F5E; --clay:#B5543C; --slate:#4F6D85;
+          --serif:"Fraunces","Cormorant Garamond",Georgia,serif; --sans:"Inter",-apple-system,"Segoe UI",Roboto,Arial,sans-serif; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-weight:300; font-size:15.5px; line-height:1.65; }
+  main { max-width:860px; margin:0 auto; padding:56px 40px 80px; }
+  h1,h2,h3 { font-family:var(--serif); font-weight:300; margin:0; }
+  h1 { font-size:54px; line-height:1.05; }
+  h2 { font-size:30px; margin:0 0 6px; }
+  h3 { font-size:20px; margin:26px 0 8px; }
+  section { border-top:1px solid var(--line); padding-top:34px; margin-top:44px; }
+  .num { font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin:0 0 6px; }
+  .lede { font-family:var(--serif); font-size:20px; line-height:1.5; color:var(--muted); margin:14px 0 0; }
+  p { margin:10px 0; }
+  a { color:var(--slate); }
+  b, strong { font-weight:500; }
+  code { font-size:13px; background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:0 4px; }
+  .meta { display:grid; grid-template-columns:150px 1fr; gap:4px 18px; margin-top:26px; font-size:14px; }
+  .meta dt { color:var(--muted); }
+  .meta dd { margin:0; }
+  table { width:100%; border-collapse:collapse; margin:14px 0 8px; font-size:13.5px; font-variant-numeric:tabular-nums; }
+  th, td { border-bottom:1px solid var(--line); padding:7px 8px; text-align:left; vertical-align:top; font-weight:300; }
+  thead th { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:400; }
+  tbody th { font-weight:500; }
+  td.r, th.r, .nums td { text-align:right; }
+  .nums td:first-child, .nums th:first-child { text-align:left; }
+  tfoot td, tfoot th { font-weight:500; border-bottom:0; }
+  figure { margin:18px 0; }
+  figure img { width:100%; display:block; border:1px solid var(--line); border-radius:6px; }
+  figcaption { font-size:12.5px; color:var(--muted); margin-top:6px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:18px 0; }
+  .kpis div { padding:14px 12px; }
+  .kpis > div + div { border-left:1px solid var(--line); }
+  .kpis .v { font-family:var(--serif); font-size:28px; line-height:1.1; }
+  .kpis .k { font-size:12px; color:var(--muted); }
+  .callout { border-left:2px solid var(--sage); padding:4px 0 4px 16px; margin:16px 0; }
+  .todo { background:#FFF4C2; border:1px dashed #C9A227; border-radius:6px; padding:12px 14px; margin:14px 0; font-size:14px; }
+  .todo b { color:#7A5B00; }
+  pre { background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:12px 14px; font-size:11.5px; line-height:1.5; overflow-x:auto; white-space:pre-wrap; }
+  .held { color:var(--sage); font-weight:500; }
+  .failed { color:var(--clay); font-weight:500; }
+  .dim { color:var(--muted); font-size:12px; }
+  .src { font-size:12.5px; color:var(--muted); }
+  .trace td { font-size:12px; }
+  .diagram { background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:10px; }
+  ul { padding-left:20px; margin:8px 0; }
+  li { margin:4px 0; }
+  @media print {
+    body { background:#fff; font-size:11pt; }
+    main { max-width:none; padding:0; }
+    section { border-top:1px solid var(--line); margin-top:22px; padding-top:14px; }
+    h2 { font-size:22pt; } h3 { font-size:13pt; margin-top:14px; } h1 { font-size:36pt; }
+    body { font-size:10.5pt; }
+    figure, .diagram, .kpis, tr { break-inside:avoid; }
+    .num, h2, h3 { break-after:avoid-page; }
+    pre.cols { break-inside:auto; }
+    figure img { max-height:3.1in; object-fit:contain; object-position:left top; }
+    .grid2 figure img { max-height:2.5in; }
+    figure.crop img { height:2.1in; max-height:2.1in; object-fit:cover; object-position:top; }
+    table { font-size:9pt; } .trace td { font-size:7.8pt; line-height:1.35; padding:4px 6px; }
+    pre.cols { columns:2; column-gap:18px; font-size:6.9pt; line-height:1.3; }
+    .lede { font-size:14pt; }
+    .todo { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    a { color:var(--ink); }
+  }
+  @page { size:letter; margin:0.7in; }
+</style>
+</head>
+<body>
+<main>
+
+<!-- 1. Title and links -->
+<header>
+  <p class="num">MGT 409 · AI Foundations for Managers · Final project</p>
+  <h1>Akin</h1>
+  <p class="lede">A two-player conversation game for a first date or two friends: an AI team writes scenarios
+  about love, both people answer in private on one device, and every answer becomes a question about each
+  other, ending with each person's relationship type, backed by their own answers.</p>
+  <dl class="meta">
+    <dt>Author</dt><dd>Emily Chow</dd>
+    <dt>Repository</dt><dd><a href="https://github.com/emchwo/akin">github.com/emchwo/akin</a></dd>
+    <dt>App</dt><dd>Runs locally from a fresh clone in about 2.5 minutes (measured); see the README</dd>
+    <dt>Model</dt><dd><code>gpt-6-luna</code> through Portkey (course key), every agent</dd>
+  </dl>
+  <figure class="crop" style="margin-top:28px"><img src="img/01_start.png" alt="Akin start screen"><figcaption>The start screen. Two first names, a setting (first date or friends), and one button.</figcaption></figure>
+</header>
+
+<!-- 2. Motivation -->
+<section>
+  <p class="num">2 · Motivation</p>
+  <h2>Getting past small talk, on a first date or with a new friend</h2>
+  <p>I built Akin after starting at Yale SOM. Like most new students, I made a lot of friends quickly, mostly
+  through proximity: the same classes, the same study rooms, the same events. I liked them, but I wanted to
+  connect on a deeper level, and the usual small talk didn't get there. First dates felt the same: pleasant,
+  polite, and over before either of us had said much about what we actually want.</p>
+  <p>So I set out to make a conversation game with fun, thought-provoking questions about how people see
+  romance, partnership, and soulmates. The topic works even between people who aren't romantically interested
+  in each other, because everyone has their own take on it, and hearing it says a lot about a person. The
+  framework came from an Instagram reel that described three axes (one vs. many, found vs. built, home vs.
+  engine) but stopped at the idea; it seemed like a great basis for a game. Like MBTI types, the eight Akin types
+  aren't meant to be definitive. They are a fun way to get people thinking and talking about how they see life
+  partnerships.</p>
+
+  <h3>Who has the problem</h3>
+  <p>Two groups: people meeting for a first date, and new friends who want to get past small talk, like a class
+  of first-year MBA students. The first group is large and growing. Three in ten U.S. adults have used a dating
+  site or app, and among adults under 30 the share is 53% (Pew Research Center, survey of 6,034 adults, July
+  2022). Most of those matches end in the same place: two people at a table trying to find out, in about an hour,
+  how the other person sees love.</p>
+
+  <h3>How they handle it today</h3>
+  <ul>
+    <li><b>Small talk.</b> Jobs, hometowns, "so what do you do for fun." It is safe, and it rarely reaches the
+    things that decide whether two people would work: what they think a relationship is, and what they want from one.</li>
+    <li><b>Question decks and lists.</b> Card games like <i>{THE AND}</i> and <i>We're Not Really Strangers</i>,
+    or Aron's "36 Questions." They push past small talk, but the questions are the same for every pair and
+    nothing connects one answer to the next.</li>
+    <li><b>Asking a chatbot</b> for "good first-date questions." It produces a generic list before the date,
+    which then has to be remembered or read off a phone.</li>
+  </ul>
+
+  <h3>What it costs them</h3>
+  <ul>
+    <li><b>Frustration.</b> 78% of U.S. dating-app users report feeling emotionally, mentally, or physically
+    exhausted by the apps at least sometimes; the top reason given is not finding a good connection (40%)
+    (Forbes Health / OnePoll, 1,000 users, 2024). In a DatingAdvice survey of 1,000+ Gen Z and millennial
+    singles, nearly 4 in 5 said dating stresses them out, and 43% said they don't date at all because of anxiety.</li>
+    <li><b>Time.</b> Each date is an evening, plus the messaging that led up to it. Learning on date three what
+    could have surfaced on date one costs two evenings.</li>
+  </ul>
+</section>
+
+<!-- 3. What is new -->
+<section>
+  <p class="num">3 · What is new</p>
+  <h2>Not a question deck: a game that listens</h2>
+  <p>Akin is built for the conversation itself, on one shared device. Each scenario is written for this pair, at this
+  point in the game, based on what they have already answered. The products people use today were compared
+  directly:</p>
+  <table>
+    <thead><tr><th>Product</th><th>What it does</th><th>What it can't do</th></tr></thead>
+    <tbody>
+      <tr><th>{THE AND} (The Skin Deep)</th><td>Decks of 199 printed prompts; Couples and Dating editions, $20 each</td><td>Same cards for every pair; no memory of earlier answers; no summary at the end</td></tr>
+      <tr><th>We're Not Really Strangers</th><td>Three-level card game for strangers, friends, couples</td><td>Static questions; answers are spoken aloud, so the first answer shapes the second</td></tr>
+      <tr><th>Aron's 36 Questions (1997)</th><td>Free list shown to raise closeness between strangers in ~45 minutes</td><td>Fixed order and wording; long; nothing is learned about compatibility</td></tr>
+      <tr><th>Dating-app profile prompts (Hinge, Bumble)</th><td>Short answers shown before matching</td><td>Happens before the date; one-sided; no back-and-forth</td></tr>
+      <tr><th>General chatbots (ChatGPT, Claude)</th><td>Lists of first-date questions on request</td><td>Generic, prepared in advance, nothing private, no structure, no result</td></tr>
+      <tr><th>Personality quizzes (MBTI, love languages, attachment style)</th><td>Self-report quiz, then a label</td><td>Played alone; the questions announce what they measure; no conversation</td></tr>
+    </tbody>
+  </table>
+  <h3>What Akin does differently, and why it matters</h3>
+  <ul>
+    <li><b>Adaptive.</b> A planner reads every answer and picks the next thing to ask about: the dimension that
+    is still least clear for this pair. No two games run the same.</li>
+    <li><b>Private, then revealed.</b> Both people answer alone on the same device, then see both answers at once.
+    Nobody adjusts their answer to please the other, which is what makes the reveal interesting.</li>
+    <li><b>A question about them, for these two answers.</b> After each reveal, an agent writes one conversation
+    prompt that fits what these two people just chose, aimed at their own lives, not the scenario.</li>
+    <li><b>Disguised measurement.</b> Scenarios read as fun dilemmas (which postcard, which Saturday plan), and a
+    checker agent rejects any that give away what they measure.</li>
+    <li><b>An answer at the end, with evidence.</b> Each person gets one of eight relationship types, a plain
+    summary of what it means, and an interpretation that cites the rounds that produced it, plus where the two
+    would click and clash.</li>
+  </ul>
+</section>
+
+<!-- 4. The agents -->
+<section>
+  <p class="num">4 · The agents</p>
+  <h2>A planner in code, four writers, and code that checks them</h2>
+  <p>Akin measures each player on three axes: <b>One vs. Many</b> (is there one right person?), <b>Found vs.
+  Built</b> (is a good relationship discovered or made?), and <b>Home vs. Engine</b> (should the right person feel
+  like home, or push you somewhere new?). The three sides combine into eight types.</p>
+
+  <div class="diagram">
+  <svg viewBox="0 0 780 420" width="100%" role="img" aria-label="Agent diagram" font-family="Inter, Arial, sans-serif" font-size="12" fill="none" stroke-linecap="round">
+    <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2E2A25"/></marker></defs>
+    <g stroke="#2E2A25" stroke-width="1">
+      <rect x="250" y="14" width="280" height="62" rx="6" fill="#FBF9F5"/>
+      <rect x="20" y="124" width="200" height="62" rx="6" fill="#FBF9F5"/>
+      <rect x="290" y="124" width="200" height="62" rx="6" fill="#FBF9F5" stroke-dasharray="4 3"/>
+      <rect x="560" y="124" width="200" height="62" rx="6" fill="#FBF9F5"/>
+      <rect x="250" y="226" width="280" height="62" rx="6" fill="#F5F1EA"/>
+      <rect x="20" y="334" width="220" height="62" rx="6" fill="#FBF9F5"/>
+      <rect x="300" y="334" width="200" height="62" rx="6" fill="#FBF9F5" stroke-dasharray="4 3"/>
+      <rect x="560" y="334" width="200" height="62" rx="6" fill="#FBF9F5"/>
+      <path d="M390 76 V100 H120 V122" marker-end="url(#ar)"/>
+      <path d="M220 155 H288" marker-end="url(#ar)"/>
+      <path d="M490 155 H558" marker-end="url(#ar)"/>
+      <path d="M660 186 V206 H120 V190" stroke="#B5543C" stroke-dasharray="3 3" marker-end="url(#ar)"/>
+      <path d="M660 186 V256 H532" marker-end="url(#ar)"/>
+      <path d="M250 256 H130 V332" marker-end="url(#ar)"/>
+      <path d="M530 272 H560 C600 272 600 40 532 40" marker-end="url(#ar)"/>
+      <path d="M240 365 H298" marker-end="url(#ar)"/>
+      <path d="M500 365 H558" marker-end="url(#ar)"/>
+    </g>
+    <g fill="#2E2A25">
+      <text x="390" y="38" text-anchor="middle" font-family="Georgia,serif" font-size="16">Planner</text>
+      <text x="390" y="58" text-anchor="middle" fill="#7A7166">plain code: scores, picks next axis, 6–8 rounds</text>
+      <text x="120" y="150" text-anchor="middle" font-family="Georgia,serif" font-size="15">Scenario Writer</text>
+      <text x="120" y="170" text-anchor="middle" fill="#7A7166">gpt-6-luna · JSON</text>
+      <text x="390" y="150" text-anchor="middle" font-family="Georgia,serif" font-size="15">Code checks</text>
+      <text x="390" y="170" text-anchor="middle" fill="#7A7166">schema, length, repeats, PG words</text>
+      <text x="660" y="150" text-anchor="middle" font-family="Georgia,serif" font-size="15">Checker</text>
+      <text x="660" y="170" text-anchor="middle" fill="#7A7166">gpt-6-luna · JSON verdict</text>
+      <text x="130" y="200" fill="#B5543C">reject + reason (max 2 rewrites, then a hand-written fallback)</text>
+      <text x="390" y="252" text-anchor="middle" font-family="Georgia,serif" font-size="15">Two players, one device</text>
+      <text x="390" y="272" text-anchor="middle" fill="#7A7166">answer privately, then reveal</text>
+      <text x="610" y="96" fill="#7A7166">answers update the scores</text>
+      <text x="130" y="360" text-anchor="middle" font-family="Georgia,serif" font-size="15">Prompt Writer</text>
+      <text x="130" y="380" text-anchor="middle" fill="#7A7166">gpt-6-luna · one question</text>
+      <text x="400" y="360" text-anchor="middle" font-family="Georgia,serif" font-size="15">Reveal Writer</text>
+      <text x="400" y="380" text-anchor="middle" fill="#7A7166">after round 6–8 · JSON</text>
+      <text x="660" y="360" text-anchor="middle" font-family="Georgia,serif" font-size="15">Evidence check</text>
+      <text x="660" y="380" text-anchor="middle" fill="#7A7166">every cited round must exist</text>
+    </g>
+  </svg>
+  </div>
+  <p class="dim">Solid boxes call the model; dashed boxes are plain code. Arrows show the order within a round.</p>
+
+  <table>
+    <thead><tr><th>Agent</th><th>Role</th><th>Tools and checks around it</th></tr></thead>
+    <tbody>
+      <tr><th>Planner</th><td>Keeps a +1/−1 score per player per axis. Rounds 1–6 ask every axis exactly twice, so all three can be decided by round 6; rounds 7–8 go to the axis still closest to the middle. Decides the final types.</td><td>Plain Python, no model. Nothing it decides can be invented.</td></tr>
+      <tr><th>Scenario Writer</th><td>Writes one scenario and two options for the target axis, avoiding earlier scenarios; names which side option A leans to.</td><td>Strict JSON schema; code checks length, repeats, sides; code randomly swaps the option order.</td></tr>
+      <tr><th>Checker</th><td>Reviews every draft before players see it: PG for strangers, really tests the axis, option→side mapping correct, doesn't give away what it measures; romance, not friendship.</td><td>JSON verdict; a failed check sends the reason back to the writer. 2 rewrites, then a hand-written scenario.</td></tr>
+      <tr><th>Prompt Writer</th><td>After each reveal, one conversation question for these two answers, about the players' own lives.</td><td>Sees prompts already used, to vary them; code rejects banned words and bad length; built-in fallback.</td></tr>
+      <tr><th>Reveal Writer</th><td>Each player's interpretation, and the "where you'd click / clash" card.</td><td>JSON; code rejects any cited round that wasn't played (in the list or the text); one retry, then code-written evidence.</td></tr>
+    </tbody>
+  </table>
+  <p>The LLM agents do not call tools on their own: each is one structured call with code around it. That was
+  deliberate. Every decision that has a right answer (which axis to ask, what each answer means, the final type)
+  is made in code, and the model only writes. The organization is a pipeline with one feedback loop
+  (Writer ↔ Checker), coordinated by the Planner.</p>
+
+  <h3>Model choice</h3>
+  <p>All four writers use <code>gpt-6-luna</code>: it is the model the course key supports, and it is fast and
+  cheap enough for a game where people are waiting at a table. Every call uses <code>reasoning_effort: low</code>:
+  in an early probe, one scenario took 1.8 s at low effort versus 5.7 s at the default. Output caps per call:
+  900 tokens (writer), 600 (checker), 400 (prompt), 1,800 (reveal). Every system prompt starts with the same
+  static ~1,900-token guide so it can be cached (Section 5).</p>
+
+  <h3>One real run, step by step</h3>
+  <p>The screenshots below and the trace table come from the same real game (game <code>{{trace_game}}</code>,
+  {{trace_calls}} model calls), captured with tracing on (<code>AKIN_TRACE=1</code>), which logs every call's
+  input data, output, and tokens. The players were scripted, the model calls were real.</p>
+  <div class="grid2">
+    <figure><img src="img/03_scenario.png" alt="Round 1 scenario"><figcaption>1. The Planner picks the least-certain axis; the Scenario Writer drafts; the Checker approves; both players read the scenario together.</figcaption></figure>
+    <figure><img src="img/04_answer.png" alt="Private answer"><figcaption>2. The first player turns the screen away and answers in private.</figcaption></figure>
+    <figure><img src="img/05_handoff.png" alt="Hand-off"><figcaption>3. Hand-off. The first player can still change their answer.</figcaption></figure>
+    <figure><img src="img/07_reveal.png" alt="Reveal"><figcaption>4. Both answers revealed; the Prompt Writer's question is about them. The next scenario is already being written in the background.</figcaption></figure>
+  </div>
+  <div class="grid2">
+    <figure><img src="img/08_end_or_continue.png" alt="End or continue"><figcaption>5. After round 6: end now, or keep going (up to 8). The reveal is prepared in the background, so either is instant.</figcaption></figure>
+    <figure><img src="img/09_end_top.png" alt="End screen"><figcaption>6. The end screen: each type's icon draws itself, then the meters, a three-line summary, and the evidence.</figcaption></figure>
+  </div>
+  <table class="trace">
+    <thead><tr><th>#</th><th>Agent · what it was given</th><th>What it returned</th><th class="r">In / cached</th><th class="r">Out</th></tr></thead>
+    <tbody>
+{{trace_rows}}
+    </tbody>
+  </table>
+</section>
+
+<!-- 5. Tokenomics -->
+<section>
+  <p class="num">5 · Tokenomics</p>
+  <h2>Less than half a cent a game</h2>
+  <p>Every model call records input, cached input, cache-write, and output tokens by agent (<code>llm.py</code>).
+  The numbers below come from {{on_n}} complete games played through the real app and model by
+  <code>tools/benchmark.py</code> (scripted players, 8 s of "talking" per round so background work behaves as in
+  real play; rounds: {{on_rounds_list}}), plus {{off_n}} games with prompt caching defeated, to measure what it saves.
+  The app shows the same counts live in its Stats panel.</p>
+
+  <div class="kpis">
+    <div><div class="v">{{on_cost}}</div><div class="k">average cost per game</div></div>
+    <div><div class="v">{{on_calls}}</div><div class="k">model calls per game ({{on_rounds}} rounds)</div></div>
+    <div><div class="v">{{on_cached_pct}}</div><div class="k">of input tokens served from cache</div></div>
+    <div><div class="v">{{cache_saving_pct}}</div><div class="k">saved by caching vs. no cache</div></div>
+  </div>
+
+  <h3>Per typical game, by agent (average of {{on_n}} games, caching on)</h3>
+  <table class="nums">
+    <thead><tr><th>Agent</th><th>Calls</th><th>Input</th><th>Cached input</th><th>Output</th><th>Cost</th></tr></thead>
+    <tbody>
+{{agent_rows}}
+    </tbody>
+    <tfoot><tr><th>Total</th><td>{{on_calls}}</td><td>{{on_input}}</td><td>{{on_cached_input}}</td><td>{{on_output}}</td><td>{{on_cost}}</td></tr></tfoot>
+  </table>
+  <p class="dim">Prices (gpt-6-luna, per 1M tokens): input $0.10, cached input $0.01, cache write $0.125, output $0.50.
+  Output includes hidden reasoning tokens (average {{on_reasoning}} per game).</p>
+
+  <h3>Every measured game</h3>
+  <table class="nums">
+    <thead><tr><th>#</th><th>Cache</th><th>Setting</th><th>Rounds</th><th>Calls</th><th>Input</th><th>Cached</th><th>Output</th><th>Rejections</th><th>Cost</th></tr></thead>
+    <tbody>
+{{game_rows}}
+    </tbody>
+  </table>
+  <figure><img src="img/11_stats.png" alt="Stats panel"><figcaption>The in-app Stats panel for the traced game: tokens and cost per agent, live.</figcaption></figure>
+
+  <h3>Cost at scale</h3>
+  <p>Assume a user plays about one game a week ({{games_per_month}} a month). Only model cost is counted; Akin
+  stores no accounts and needs one small web server.</p>
+  <table class="nums">
+    <thead><tr><th>Scale</th><th>Games / month</th><th>Model cost / month</th></tr></thead>
+    <tbody>
+      <tr><th>Per game</th><td>1</td><td>{{on_cost}}</td></tr>
+      <tr><th>Per user</th><td>{{games_per_month}}</td><td>{{cost_user_month}}</td></tr>
+      <tr><th>100 users</th><td>400</td><td>{{cost_100}}</td></tr>
+      <tr><th>10,000 users</th><td>40,000</td><td>{{cost_10k}} (about {{cost_10k_year}} a year)</td></tr>
+      <tr><th>10,000 users, no caching</th><td>40,000</td><td>{{cost_10k_nocache}}</td></tr>
+    </tbody>
+  </table>
+  <p>For comparison, one printed deck of conversation cards costs $20.</p>
+
+  <h3>Cost-cutting steps, and what they cost in quality</h3>
+  <table>
+    <thead><tr><th>Step</th><th>Saving</th><th>Effect on quality (evidence)</th></tr></thead>
+    <tbody>
+      <tr><th>Prompt caching: one static ~1,900-token guide at the start of every system prompt; all per-call data in the user message</th><td>{{on_cached_pct}} of input cached; {{cache_saving_pct}} cheaper per game ({{on_cost}} vs {{off_cost}})</td><td>None expected: same prompts and model. Measured: Checker rejected {{on_reject_rate}} of drafts with caching vs {{off_reject_rate}} without; reveals fell back to code {{on_reveal_fallbacks}} vs {{off_reveal_fallbacks}} times.</td></tr>
+      <tr><th>Code instead of model where there is a right answer (Planner, type, validation)</th><td>No calls for scoring, axis choice, or the final type</td><td>Better: these parts can't be invented or drift.</td></tr>
+      <tr><th>Low reasoning effort on every call</th><td>Fewer hidden reasoning tokens; about 3× faster in an early probe</td><td>Not measured head-to-head on quality. The Checker loop catches weak drafts either way.</td></tr>
+      <tr><th>6 rounds by default (8 max), down from 10</th><td>Fewer calls per game</td><td>Rounds 1–6 now ask each axis exactly twice. Players asked for this: the 10-round version felt long.</td></tr>
+      <tr><th>Background prefetch (next scenario, and the reveal from round 6)</th><td>Costs a little: a prepared reveal is thrown away if players keep going</td><td>Waits players see: next scenario {{wait_next}} s, end screen {{wait_end}} s, reveal {{wait_reveal}} s (averages).</td></tr>
+    </tbody>
+  </table>
+  <p>The Checker is the one deliberate cost increase: it is {{checker_share}} of each game's cost, and in these
+  games it rejected {{on_rejections}} drafts ({{on_reject_rate}} of all drafts) before any player saw them.</p>
+</section>
+
+<!-- 6. Safety -->
+<section>
+  <p class="num">6 · Safety</p>
+  <h2>Defenses built in, and shown working</h2>
+  <table>
+    <thead><tr><th>Risk</th><th>What could happen</th><th>Defense</th></tr></thead>
+    <tbody>
+      <tr><th>Prompt injection</th><td>A player types instructions as their name ("Ignore all instructions")</td><td>Names are the only free text: 20 characters, 2 words, letters only; code/markup characters and instruction words are rejected. <b>Names are never sent to the model</b>: agents only see "Player A/B", and names are swapped in afterwards.</td></tr>
+      <tr><th>Data leaks</th><td>Player names or answers stored or sent somewhere</td><td>Names live only in server memory; no log contains a name (rejected names are logged by reason and length only).</td></tr>
+      <tr><th>Unsafe content</th><td>A scenario that is not PG for two strangers</td><td>Code screen for obvious terms, then the Checker on every draft; 3 failures → a hand-written, pre-checked scenario.</td></tr>
+      <tr><th>Invented facts</th><td>The reveal cites answers or rounds that never happened</td><td>Code rejects any round number not played, in the citation list or in the text; retry once, then code-written evidence.</td></tr>
+      <tr><th>Wrong actions</th><td>A misclick records the wrong answer</td><td>Back buttons on every answer screen, "change my answer" on hand-offs, and an undo that takes back the whole round.</td></tr>
+      <tr><th>Infinite loops</th><td>Writer and Checker argue forever; a game never ends</td><td>Retry limits on every agent; 8-round hard cap.</td></tr>
+      <tr><th>Overspending</th><td>A runaway game or server burns the budget</td><td>40 calls per game (2 held back for the reveal), 600 per server run, an output-token cap on every call; a friendly end screen when a cap is hit.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Evidence: the defenses under attack</h3>
+  <p><code>tests/safety_tests.py</code> runs each attack against the real app. The Checker test uses 4 real model
+  calls; the rest swap in a fake model so failures can be forced on purpose. Result: <b>{{safety_held_words}}</b>.</p>
+  <pre class="cols">{{safety_output}}</pre>
+  <div class="grid2">
+    <figure><img src="img/12_name_rejected.png" alt="Injection name rejected"><figcaption>"Ignore all instructions" as a name is rejected on the start screen.</figcaption></figure>
+    <div>
+      <p style="margin-top:0"><b>Every defense logs what it caught</b> to <code>logs/safety.jsonl</code>, one line per event. One example of each kind, from the test run:</p>
+      <table><thead><tr><th>Defense</th><th>What it caught</th></tr></thead><tbody>
+{{safety_log}}
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Impact -->
+<section>
+  <p class="num">7 · Impact</p>
+  <h2>What changes for the two people at the table</h2>
+  <h3>A real session, and what it changed</h3>
+  <p>I played a full game with a friend in the Friends setting. It ran 6 rounds and took about 20 minutes, with
+  conversation length varying a lot from round to round: some prompts got a quick answer, others turned into long
+  tangents. That is the intended pacing. The game waits for the conversation, and the AI added only seconds of
+  waiting per round (measured below).</p>
+  <p>His main feedback was about the ending. In his words: <i>"the ending felt like it was just repeating our
+  answers back to us."</i> The end screen read like a cut-and-dry report of the agent's analysis, not a payoff
+  for twenty minutes of conversation. In response, I changed the Reveal Writer from retelling each player's answers to
+  synthesizing them: what the pattern says a person values in love, one nuance or tension in their answers, and how
+  their views might shape the way they connect with someone in real life, still citing the rounds it draws on. I
+  also added a plain three-line summary of each side of the type. An earlier playtest had shown the original
+  10-round game was tiring by the end, which led to the 6-round default with up to 2 more by choice.</p>
+  <div class="grid2">
+    <div class="callout" style="border-color:var(--line)"><p class="dim" style="margin:0 0 4px">Before (real output, old instructions)</p>
+    <p style="margin:0">"You chose the lighthouse postcard and the story of two people who kept choosing each other, in Rounds 1 and 4&mdash;both
+    choices favor a lasting, singular bond. In Round 2, you kept chatting over the surprise tea, suggesting you're willing to work through
+    an awkward start; your familiar-song walk in Round 3 points to comfort and ease."</p></div>
+    <div class="callout"><p class="dim" style="margin:0 0 4px">After (real output, traced game)</p>
+    <p style="margin:0">"You seem drawn to love that feels welcoming and easy to return to, with familiar rituals giving a relationship its
+    own quiet warmth (rounds 3 and 6). [...] you gave an awkward start room to grow, yet were charmed by an effortless first conversation
+    (rounds 1, 2, 4, and 5). You might bring steadiness and openness to a partner, while appreciating someone who makes the everyday
+    feel special."</p></div>
+  </div>
+  <p>To test with more pairs, the app saves every session's answers to "Does this feel right?", "Did you learn
+  something new about the other person?", and "Would you play again?" without names, and the <code>/results</code>
+  page summarizes them by setting, with game length and cost, excluding test and benchmark runs.</p>
+
+  <h3>Numbers, with sources</h3>
+  <ul>
+    <li><b>Quality of conversation.</b> Structured, escalating self-disclosure measurably increases closeness
+    between strangers: in Aron et al. (1997), pairs who answered the 36 closeness questions for about 45 minutes
+    reported more closeness than pairs who made small talk. Akin uses the same mechanism (personal questions,
+    taking turns, escalating) and adds adaptivity and a reveal.</li>
+    <li><b>Reach.</b> 30% of U.S. adults, and 53% of those under 30, have used a dating site or app (Pew, 2023
+    report). Every one of those matches ends with a first meeting.</li>
+    <li><b>Money.</b> A game costs about {{on_cost}} in model calls, against $20 for a printed card deck.</li>
+    <li><b>Time.</b> A game is 6 rounds by default. The AI adds little waiting: on average {{wait_first}} s for the
+    first scenario, {{wait_reveal}} s to reveal answers, {{wait_next}} s for the next scenario (written while players
+    talk), and {{wait_end}} s for the end screen.</li>
+  </ul>
+</section>
+
+<!-- 8. Limits and next steps -->
+<section>
+  <p class="num">8 · Limits and next steps</p>
+  <h2>What doesn't work yet</h2>
+  <ul>
+    <li><b>Small user sample.</b> One full real session so far, plus earlier playtests. The type is a
+    conversation starter, like MBTI, not a validated psychological measure.</li>
+    <li><b>Six answers per axis-pair is thin.</b> With two answers per axis by round 6, a split (1–1) is decided
+    by the latest answer and shown as "a close call." Rounds 7–8 help, but players have to choose them.</li>
+    <li><b>Scenarios can still be a little obvious</b> on One vs. Many, the hardest axis to disguise; the Checker
+    is calibrated to accept anything as subtle as its reference examples.</li>
+    <li><b>Prompts sometimes drift</b> loosely from their scenario, and first-date prompts occasionally mention
+    "someone you dated," which some people may find too personal on a first date.</li>
+    <li><b>One shared device</b> relies on players turning the screen away; nothing enforces it.</li>
+    <li><b>Runs locally.</b> Not hosted yet: someone has to start the server from a terminal before playing.</li>
+  </ul>
+  <h3>What I'd build next</h3>
+  <ul>
+    <li><b>Host it online or make it an app:</b> two paths to the same goal, so no one has to start a server before
+    playing. A hosted web version would let anyone open a link on a laptop; a mobile app would put Akin on the
+    phones people already bring to a date or a coffee.</li>
+    <li><b>Two-device mode:</b> let each player answer on their own device, so answers stay truly private.</li>
+    <li><b>Validate the types</b> against an established relationship-beliefs questionnaire with more players.</li>
+    <li><b>A friends-specific reveal</b>: types and taglines written for "how you'd advise each other," not only how
+    each sees love.</li>
+    <li><b>A post-date card</b>: a short shareable summary of the two types and the three prompts that started the best conversations.</li>
+    <li><b>A/B test the Checker</b> and reasoning effort for quality per cent of cost.</li>
+  </ul>
+
+  <h3 style="margin-top:34px">Sources</h3>
+  <ul class="src">
+    <li>Pew Research Center, <a href="https://www.pewresearch.org/internet/2023/02/02/online-dating/">From Looking for Love to Swiping the Field: Online Dating in the U.S.</a> (Feb 2, 2023; 6,034 adults, July 5–17, 2022).</li>
+    <li>Aron, A., Melinat, E., Aron, E. N., Vallone, R. D., &amp; Bator, R. J. (1997). The experimental generation of interpersonal closeness. <i>Personality and Social Psychology Bulletin</i>, 23(4). Summary: <a href="https://ggia.berkeley.edu/practice/practice_as_pdf/36_questions_for_increasing_closeness">Greater Good in Action</a>.</li>
+    <li>Forbes Health / OnePoll dating-app burnout survey, 1,000 U.S. users, March–April 2024. Coverage: <a href="https://www.globaldatinginsights.com/news/new-forbes-study-explores-dating-app-burnout/">Global Dating Insights</a>.</li>
+    <li>DatingAdvice, <a href="https://www.datingadvice.com/studies/dating-anxiety-statistics">Survey: over 2 in 5 young Americans don't date due to anxiety</a> (1,000+ Gen Z and millennial singles).</li>
+    <li>The Skin Deep, <a href="https://shop.theskindeep.com/pages/the-and-conversation-card-games">{THE AND} conversation card games</a>.</li>
+  </ul>
+</section>
+
+</main>
+</body>
+</html>

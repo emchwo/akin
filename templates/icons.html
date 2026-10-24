@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ app_name }} · Icon test</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%232E2A25' stroke-width='5' stroke-linecap='round'%3E%3Ccircle cx='28' cy='38' r='15'/%3E%3Cpath d='M43 23 V53'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .stage { max-width: 1040px; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); margin-top: 40px; }
+    @media (max-width: 760px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    .cell { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 28px 18px 22px; text-align: center; background: var(--surface); }
+    .cell .big svg { width: 112px; height: 112px; }
+    .cell .name { font-family: var(--serif); font-weight: 300; font-size: 19px; margin-top: 10px; }
+    .cell .small { display: flex; gap: 14px; justify-content: center; align-items: end; margin-top: 14px; }
+    .cell .small span { font-size: 11px; color: var(--muted); display: block; }
+  </style>
+</head>
+<body>
+  <header class="topbar"><a class="wordmark" href="/" aria-label="{{ app_name }} home">{% include "_logo.html" %}</a></header>
+  <main class="stage">
+    <p class="eyebrow">Icon test page</p>
+    <h2>The eight types</h2>
+    <p class="lede">Each icon at 112px (drawing itself), plus 48px and 24px to check readability at small sizes.</p>
+    <div class="actions"><button class="btn" id="replay">Replay drawing</button></div>
+    <div class="grid" id="grid"></div>
+  </main>
+  <script src="{{ url_for('static', filename='icons.js') }}"></script>
+  <script>
+    const grid = document.getElementById("grid");
+    const bigs = [];
+    for (const key of AkinIcons.keys) {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      const big = document.createElement("div");
+      big.className = "big";
+      const svg = AkinIcons.element(key);
+      big.append(svg);
+      bigs.push(svg);
+      const name = document.createElement("div");
+      name.className = "name";
+      name.textContent = AkinIcons.ICONS[key].name;
+      const small = document.createElement("div");
+      small.className = "small";
+      for (const s of [48, 24]) {
+        const w = document.createElement("div");
+        w.append(AkinIcons.element(key, s));
+        const lab = document.createElement("span");
+        lab.textContent = s + "px";
+        w.append(lab);
+        small.append(w);
+      }
+      cell.append(big, name, small);
+      grid.append(cell);
+    }
+    const replay = () => bigs.forEach((svg) => AkinIcons.draw(svg));
+    document.getElementById("replay").addEventListener("click", replay);
+    replay();
+  </script>
+</body>
+</html>
