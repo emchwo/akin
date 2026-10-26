@@ -89,8 +89,12 @@
   other, ending with each person's relationship type, backed by their own answers.</p>
   <dl class="meta">
     <dt>Author</dt><dd>Emily Chow</dd>
-    <dt>Repository</dt><dd><a href="https://github.com/emchwo/akin">github.com/emchwo/akin</a></dd>
-    <dt>App</dt><dd>Runs locally from a fresh clone in about 2.5 minutes (measured); see the README</dd>
+    <dt>Repository</dt><dd><a href="https://github.com/emchwo/akin">https://github.com/emchwo/akin</a> (public)</dd>
+    <dt>Clone</dt><dd><code>git clone https://github.com/emchwo/akin.git</code></dd>
+    <dt>Run it</dt><dd>Follow the README: create a virtual environment, <code>pip install -r requirements.txt</code>,
+    <code>python app.py</code>, then open <code>http://127.0.0.1:5050</code>. The app reads <code>PORTKEY_API_KEY</code>
+    from a <code>.env</code> file in the repo folder or the folder one level above it. About 2 minutes from a fresh
+    clone (measured).</dd>
     <dt>Model</dt><dd><code>gpt-6-luna</code> through Portkey (course key), every agent</dd>
   </dl>
   <figure class="crop" style="margin-top:28px"><img src="img/01_start.png" alt="Akin start screen"><figcaption>The start screen. Two first names, a setting (first date or friends), and one button.</figcaption></figure>
